@@ -1,0 +1,47 @@
+{
+    "name": "satapi",
+    "version": "1.0.0",
+    "description": "sat",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon app.js",
+        "lint": "eslint .",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/qzsf/satapi.git"
+    },
+    "keywords": [
+        "node.js",
+        "sat"
+    ],
+    "author": "al",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/qzsf/satapi/issues"
+    },
+    "homepage": "https://github.com/qzsf/satapi#readme",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "mysql": "^2.18.1"
+    },
+    "devDependencies": {
+        "eslint": "^6.8.0",
+        "eslint-config-airbnb-base": "^14.0.0",
+        "eslint-plugin-import": "^2.20.0",
+        "nodemon": "^2.0.2"
+    },
+    "nodemonConfig": {
+        "restartable": "rs",
+        "ignore": [
+            "node_modules/**/node_modules"
+        ],
+        "delay": "1500",
+        "env": {
+            "NODE_ENV": "development",
+            "PORT": 4000
+        }
+    }
+}
