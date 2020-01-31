@@ -24,13 +24,29 @@ function wordController() {
     const get = (req, res) => {
         console.log('get')
         // deal with the url query string. for example: /voc?word=test
-        if (req.query.word) {
-            // query db for the word
-            // db.query('select * from', (err,rows, fields)=>{})
-            return res.json({ word: req.query.word });
-        }
-        const response = { text: 'a list of words' };
-        return res.json(response);
+        //if (false) {
+        // query db for the word
+        // db.query('select * from', (err,rows, fields)=>{})
+        // return res.json({ word: req.query.word });
+        //const query = `select * from entries where word = '${req.query.word}'`;
+        //db.query(query, (err, result, fields)=>{
+        //  if(err){
+        //      return res.json(err);
+        //  }
+        //  return res.write(result);
+        //  // return res.json(result);
+        //});
+        //}
+        const query = `select * from entries where word = 'test'`;
+        //const response = { text: 'a list of words' };
+        db.query(query, (err, result, fields) => {
+            if (err) {
+                return res.json(err);
+            }
+            //  return res.write(result);
+            return res.json(result);
+            //return res.json(response);
+        });
     };
 
     // implement get single item
