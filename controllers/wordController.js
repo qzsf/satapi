@@ -15,47 +15,78 @@ function wordController() {
         console.log('mysql connected.');
     })
 
+    // post /api/voc
     const post = (req, res) => {
         console.log('post');
         console.log(req.body);
         const response = { status: 'success', body: req.body };
         return res.status(201).json(response);
     };
+
+    // get /api/voc
+    const getAll = (req, res) => {
+        console.log('getAll')
+        // for url query string. example: /voc?word=test
+        if (req.query.word) {
+            // query db for the word
+            const queryStr = `select * from entries where word = '${req.query.word}'`;
+            db.query(queryStr, (err, result) => {
+                if (err) return res.send(err);
+                return res.json(result);
+            });
+            setTimeout(() => {
+                return res.json({ word: req.query.word });
+            }, 1000);
+        } else {
+            return res.send('URI format: /api/voc/queryword');
+        }
+    };
+
+    // get /api/voc/word
     const get = (req, res) => {
-        console.log('get')
-        // deal with the url query string. for example: /voc?word=test
-        //if (false) {
-        // query db for the word
-        // db.query('select * from', (err,rows, fields)=>{})
-        // return res.json({ word: req.query.word });
-        //const query = `select * from entries where word = '${req.query.word}'`;
-        //db.query(query, (err, result, fields)=>{
-        //  if(err){
-        //      return res.json(err);
-        //  }
-        //  return res.write(result);
-        //  // return res.json(result);
-        //});
-        //}
-        const query = `select * from entries where word = 'test'`;
-        //const response = { text: 'a list of words' };
-        db.query(query, (err, result, fields) => {
-            if (err) {
-                return res.json(err);
-            }
-            //  return res.write(result);
+        console.log('get');
+        const queryStr = `select * from entries where word = '${req.word}'`;
+        db.query(queryStr, (err, result) => {
+            if (err) return res.send(err);
             return res.json(result);
-            //return res.json(response);
         });
     };
 
-    // implement get single item
-    // implement put
-    // implement patch
-    // implement delete
+    // put /api/voc/word
+    const put = (req, res) => {
+        console.log('put');
+        // update 'sat' column
+        if (req.body.sat) {
+            const queryStr = `update entries set sat = ${req.body.sat} where word = '${req.word}'`;
+            db.query(queryStr, (err, result) => {
+                if (err) return res.send(err);
+                return res.json(result);
+            });
+        } else {
+            res.json({ error: 'word.sat cannot be empty.' });
+        }
+    };
+
+    // patch /api/voc/word
+    const patch = (req, res) => {
+        console.log('patch');
+        // update 'sat' column
+        if (req.body.sat) {
+            const queryStr = `update entries set sat = ${req.body.sat} where word = '${req.word}'`;
+            db.query(queryStr, (err, result) => {
+                if (err) return res.send(err);
+                return res.json(result);
+            });
+        } else {
+            res.json({ error: 'word.sat cannot be empty.' });
+        }
+    };
+
+    // delete /api/voc/word
+    const deleteEntry = (req, res) => res.json({ error: 'delete function disabled.' });
 
     // revealing module pattern
-    return { post, get };
+    return { post, getAll, get, put, patch, deleteEntry };
 }
 
 module.exports = wordController;
