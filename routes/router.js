@@ -11,6 +11,10 @@ function routes() {
         // HTTP POST create a new item
         .post(controller.post);
 
+    // uri params: example: /voc/sat/{"offset":5,"count":2}
+    router.route('/voc/sat/:obj')
+        .get(controller.getSat);
+
     // middleware for a route
     // next is a function that middleware uses to signal it has done with its
     // processing, and ready to pass the req to the next step
@@ -32,6 +36,7 @@ function routes() {
         .put(controller.put)
         .patch(controller.patch)
         .delete(controller.deleteEntry);
+
     return router;
 }
 

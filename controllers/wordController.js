@@ -42,7 +42,17 @@ function wordController() {
         }
     };
 
-    // get /api/voc/word
+    // getSat /api/voc/sat/:obj
+    const getSat = (req,res)=>{
+        console.log('getSat');
+        const queryStr = `select * from entries where sat = true limit ${req.params.obj.offset},${req.params.obj.count}`;
+        db.query(queryStr, (err, result) => {
+            if (err) return res.send(err);
+            return res.json(result);
+        });
+    };
+
+    // get /api/voc/:word
     const get = (req, res) => {
         console.log('get');
         const queryStr = `select * from entries where word = '${req.word}'`;
@@ -86,7 +96,7 @@ function wordController() {
     const deleteEntry = (req, res) => res.json({ error: 'delete function disabled.' });
 
     // revealing module pattern
-    return { post, getAll, get, put, patch, deleteEntry };
+    return { post, getAll, getSat, get, put, patch, deleteEntry };
 }
 
 module.exports = wordController;
