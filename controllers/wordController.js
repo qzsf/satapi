@@ -45,7 +45,8 @@ function wordController() {
     // getSat /api/voc/sat/:obj
     const getSat = (req,res)=>{
         console.log('getSat');
-        const queryStr = `select * from entries where sat = true limit ${req.params.obj.offset},${req.params.obj.count}`;
+        const obj = JSON.parse(req.params.obj);
+        const queryStr = `select * from entries where sat = true limit ${obj.offset},${obj.count}`;
         db.query(queryStr, (err, result) => {
             if (err) return res.send(err);
             return res.json(result);
