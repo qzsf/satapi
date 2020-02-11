@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // create a reference to express
 const express = require('express');
 const bodyParser = require('body-parser');

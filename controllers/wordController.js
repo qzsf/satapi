@@ -63,6 +63,16 @@ function wordController() {
         });
     };
 
+    // search from start of a word
+    const search = (req, res)=>{
+        console.log('search');
+        const queryStr = `select * from entries where word like '${req.params.str}%' limit 10`;
+        db.query(queryStr, (err, result) => {
+            if (err) return res.send(err);
+            return res.json(result);
+        });
+    }
+
     // put /api/voc/word
     const put = (req, res) => {
         console.log('put');
@@ -97,7 +107,7 @@ function wordController() {
     const deleteEntry = (req, res) => res.json({ error: 'delete function disabled.' });
 
     // revealing module pattern
-    return { post, getAll, getSat, get, put, patch, deleteEntry };
+    return { post, getAll, getSat, get, search, put, patch, deleteEntry };
 }
 
 module.exports = wordController;

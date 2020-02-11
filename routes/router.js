@@ -15,6 +15,10 @@ function routes() {
     router.route('/voc/sat/:obj')
         .get(controller.getSat);
 
+    // search word
+    router.route('/voc/search/:str')
+        .get(controller.search);
+
     // middleware for a route
     // next is a function that middleware uses to signal it has done with its
     // processing, and ready to pass the req to the next step
